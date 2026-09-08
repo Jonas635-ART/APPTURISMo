@@ -9,8 +9,24 @@ import androidx.lifecycle.asLiveData
 
 class AdminViewModel(private val repository: TurismoRepository) : ViewModel() {
 
+    val allRecorridos: LiveData<List<com.example.appturismo.data.model.Recorrido>> = repository.allRecorridos.asLiveData()
     val allPuntos: LiveData<List<PuntoTuristico>> = repository.allPuntos.asLiveData()
     val admins: LiveData<List<User>> = repository.getAdmins().asLiveData()
+
+    fun addRecorrido(nombre: String, descripcion: String) {
+        viewModelScope.launch {
+            repository.insertRecorrido(
+                com.example.appturismo.data.model.Recorrido(
+                    nombre = nombre,
+                    descripcion = descripcion,
+                    region = "Nacional",
+                    duracionEstimada = "3 Horas",
+                    distanciaTotal = "10 km",
+                    urlImagen = "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=800"
+                )
+            )
+        }
+    }
 
     fun addAdmin(username: String, password: String) {
         viewModelScope.launch {

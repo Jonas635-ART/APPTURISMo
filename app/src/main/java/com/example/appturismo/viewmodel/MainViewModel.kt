@@ -8,7 +8,12 @@ import androidx.lifecycle.asLiveData
 
 class MainViewModel(private val repository: TurismoRepository) : ViewModel() {
 
+    val allRecorridos: LiveData<List<com.example.appturismo.data.model.Recorrido>> = repository.allRecorridos.asLiveData()
     val allPuntos: LiveData<List<PuntoTuristico>> = repository.allPuntos.asLiveData()
+
+    fun getPuntosByRecorrido(recorridoId: Int): LiveData<List<PuntoTuristico>> {
+        return repository.getPuntosByRecorrido(recorridoId).asLiveData()
+    }
 
     private val _syncing = MutableLiveData<Boolean>()
     val syncing: LiveData<Boolean> = _syncing

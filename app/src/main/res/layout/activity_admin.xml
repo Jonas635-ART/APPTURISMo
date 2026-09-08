@@ -61,6 +61,17 @@
                     app:icon="@android:drawable/ic_input_add" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddRecorrido"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Crear Nuevo Recorrido Guiado"
+                    android:textSize="15sp"
+                    app:cornerRadius="12dp"
+                    app:icon="@android:drawable/ic_dialog_map" />
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAddAdmin"
                     style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="match_parent"

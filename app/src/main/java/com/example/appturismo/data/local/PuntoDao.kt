@@ -6,8 +6,11 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PuntoDao {
-    @Query("SELECT * FROM puntos_turisticos")
+    @Query("SELECT * FROM puntos_turisticos ORDER BY orden ASC")
     fun getAllPuntos(): Flow<List<PuntoTuristico>>
+
+    @Query("SELECT * FROM puntos_turisticos WHERE recorridoId = :recorridoId ORDER BY orden ASC")
+    fun getPuntosByRecorrido(recorridoId: Int): Flow<List<PuntoTuristico>>
 
     @Query("SELECT * FROM puntos_turisticos WHERE id = :id")
     suspend fun getPuntoById(id: Int): PuntoTuristico?
@@ -23,4 +26,7 @@ interface PuntoDao {
 
     @Query("SELECT * FROM puntos_turisticos WHERE id IN (SELECT puntoId FROM user_favorites WHERE userId = :userId)")
     fun getFavoritePuntos(userId: Int): Flow<List<PuntoTuristico>>
+
+    @Query("SELECT COUNT(*) FROM puntos_turisticos")
+    suspend fun getCount(): Int
 }

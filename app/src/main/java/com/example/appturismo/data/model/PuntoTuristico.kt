@@ -6,10 +6,12 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "puntos_turisticos")
 data class PuntoTuristico(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val recorridoId: Int = 1,
+    val orden: Int = 1, // 1 al 5
     val nombre: String,
     val descripcion: String,
-    val fotos: List<String>, // multiple Photos (URLs)
+    val fotos: List<String>,
     val latitud: Double,
     val longitud: Double,
-    val esFavorito: Boolean = false // This might be local only or per user
+    val esFavorito: Boolean = false
 )

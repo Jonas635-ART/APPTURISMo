@@ -61,6 +61,10 @@ class AdminActivity : AppCompatActivity() {
             startActivity(Intent(this, AddPuntoActivity::class.java))
         }
 
+        binding.btnAddRecorrido.setOnClickListener {
+            showAddRecorridoDialog()
+        }
+
         binding.btnAddAdmin.setOnClickListener {
             showAddAdminDialog()
         }
@@ -81,6 +85,34 @@ class AdminActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
+
+    private fun showAddRecorridoDialog() {
+        val builder = android.app.AlertDialog.Builder(this)
+        builder.setTitle("Nuevo Recorrido Guiado")
+        
+        val layout = android.widget.LinearLayout(this).apply {
+            orientation = android.widget.LinearLayout.VERTICAL
+            setPadding(50, 40, 50, 10)
+        }
+        
+        val etNombre = android.widget.EditText(this).apply { hint = "Nombre del Recorrido (ej. Recorrido 3: Ruta Sur)" }
+        val etDesc = android.widget.EditText(this).apply { hint = "Descripción breve" }
+        
+        layout.addView(etNombre)
+        layout.addView(etDesc)
+        
+        builder.setView(layout)
+        builder.setPositiveButton("Crear") { _, _ ->
+            val nombre = etNombre.text.toString()
+            val desc = etDesc.text.toString()
+            if (nombre.isNotEmpty()) {
+                viewModel.addRecorrido(nombre, desc)
+                android.widget.Toast.makeText(this, "Recorrido creado con éxito", android.widget.Toast.LENGTH_SHORT).show()
+            }
+        }
+        builder.setNegativeButton("Cancelar", null)
+        builder.show()
     }
 
     private fun showAddAdminDialog() {

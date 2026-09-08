@@ -30,6 +30,7 @@ class PuntoAdapter(
         fun bind(punto: PuntoTuristico) {
             binding.tvNombre.text = punto.nombre
             binding.tvDescripcion.text = punto.descripcion
+            binding.tvOrdenBadge.text = "Punto ${punto.orden} de 5"
             
             if (punto.fotos.isNotEmpty()) {
                 Glide.with(binding.ivFoto.context)
