@@ -1,10 +1,11 @@
 package com.example.appturismo.ui.admin
 
+import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appturismo.TurismoApplication
@@ -23,6 +24,18 @@ class AddPuntoActivity : AppCompatActivity() {
 
     private var currentRecorridos: List<Recorrido> = emptyList()
     private var selectedRecorridoId: Int = 1
+
+    private val mapPickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+            val lat = result.data?.getDoubleExtra("LATITUDE", 0.0) ?: 0.0
+            val lng = result.data?.getDoubleExtra("LONGITUDE", 0.0) ?: 0.0
+            if (lat != 0.0 && lng != 0.0) {
+                binding.etLatitud.setText(lat.toString())
+                binding.etLongitud.setText(lng.toString())
+                Toast.makeText(this, "Ubicación seleccionada del mapa", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +82,16 @@ class AddPuntoActivity : AppCompatActivity() {
             }
         }
 
+        binding.btnSeleccionarEnMapa.setOnClickListener {
+            val currentLat = binding.etLatitud.text.toString().toDoubleOrNull() ?: -0.2201
+            val currentLng = binding.etLongitud.text.toString().toDoubleOrNull() ?: -78.5122
+            val intent = Intent(this, MapPickerActivity::class.java).apply {
+                putExtra("LATITUDE", currentLat)
+                putExtra("LONGITUDE", currentLng)
+            }
+            mapPickerLauncher.launch(intent)
+        }
+
         binding.btnGuardarPunto.setOnClickListener {
             val nombre = binding.etNombre.text.toString()
             val descripcion = binding.etDescripcion.text.toString()
@@ -104,17 +127,6 @@ class AddPuntoActivity : AppCompatActivity() {
                 finish()
             } else {
                 Toast.makeText(this, "Por favor completa todos los campos correctamente", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        binding.btnAbrirMaps.setOnClickListener {
-            val gmmIntentUri = Uri.parse("geo:0,0?q=sitios turisticos")
-            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-            mapIntent.setPackage("com.google.android.apps.maps")
-            if (mapIntent.resolveActivity(packageManager) != null) {
-                startActivity(mapIntent)
-            } else {
-                startActivity(Intent(Intent.ACTION_VIEW, gmmIntentUri))
             }
         }
     }

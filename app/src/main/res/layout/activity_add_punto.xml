@@ -160,14 +160,15 @@
                     </LinearLayout>
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnAbrirMaps"
-                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:id="@+id/btnSeleccionarEnMapa"
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
                         android:layout_marginBottom="24dp"
-                        android:text="Abrir Google Maps para buscar lugar"
+                        android:text="Elegir Ubicación en Mapa Interactivo"
                         android:textSize="14sp"
-                        app:icon="@android:drawable/ic_dialog_map" />
+                        android:textStyle="bold"
+                        app:cornerRadius="12dp"
+                        app:icon="@android:drawable/ic_menu_myplaces" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnGuardarPunto"

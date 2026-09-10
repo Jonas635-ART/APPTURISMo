@@ -24,6 +24,7 @@
         <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.admin.AdminActivity" />
         <activity android:name=".ui.admin.AddPuntoActivity" />
+        <activity android:name=".ui.admin.MapPickerActivity" />
         <activity android:name=".ui.detail.DetailActivity" />
         <activity
             android:name=".LoginActivity2"
